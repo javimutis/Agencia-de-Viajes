@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:cardCornerRadius="20dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/contenedorPrincipalItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <ImageView
+                    android:id="@+id/imagenDestinosItem"
+                    android:layout_width="160dp"
+                    android:layout_height="95dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    app:srcCompat="@drawable/cancun"></ImageView>
+
+                <LinearLayout
+                    android:id="@+id/contenedorItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/imagenDestinosItem"
+                    android:layout_toRightOf="@id/imagenDestinosItem"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nombreDestinoItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="Cancun"
+                        android:textColor="@color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold"></TextView>
+
+                    <LinearLayout
+                        android:layout_width="129dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/diaItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="7 DÍAS"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            android:textStyle="bold"></TextView>
+
+                        <TextView
+                            android:id="@+id/nocheItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="6 NOCHES"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            android:textStyle="bold"></TextView>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/valorDestinoItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="USD 700"
+                        android:textColor="@color/black"
+                        android:textSize="22dp"
+                        android:textStyle="bold"></TextView>
+
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toRightOf="@id/contenedorItem"
+                    app:srcCompat="@drawable/baseline_chevron_right_24"></ImageView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

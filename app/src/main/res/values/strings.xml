@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Otro Mundo</string>
+    <string name="mensaje_validacion">Tienes que ingresar una edad</string>
+    <string name="mensaje_exito">Acá una actividad</string>
+    <string name="boton_ficha">IR AL REGISTRO</string>
+    <string name="boton_agregar">AGREGAR DESTINO</string>
+    <string name="mensaje_toast_ficha_viaje">Tienes que ingresar los datos del viaje</string>
+
+
+</resources>
