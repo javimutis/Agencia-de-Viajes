@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.RadioGroup;
 
 import java.io.File;
+
 import android.Manifest;
 import android.widget.Toast;
 
@@ -35,6 +36,14 @@ import bootcamp.cl.ejemplo.appveterinarioperruno.databinding.ActivityFichaViajeB
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.Destino;
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.FichaDestino;
 
+/*El método "tomarFoto()" es utilizado para lanzar la cámara del dispositivo y permitir al usuario
+ tomar una foto. Este método solicita el permiso para usar la cámara si no está otorgado y crea un
+ archivo donde se almacenará la imagen capturada por la cámara. Luego, el método inicia la actividad
+ de la cámara y pasa la URI del archivo creado al intent de la cámara.
+
+El método "createImageFile()" es utilizado para crear un archivo de imagen único, basado en la fecha
+y hora actuales, que se utilizará para almacenar la imagen capturada por la cámara. Este método
+devuelve el archivo creado y guarda la ruta absoluta del archivo en la variable "mCurrentPhotoPath".*/
 public class FichaViajeActivity extends AppCompatActivity {
 
     // Variables que almacenan los valores de los permisos de la cámara y la foto
@@ -43,11 +52,11 @@ public class FichaViajeActivity extends AppCompatActivity {
     // Variable que almacena la imagen de la cámara
     private Bitmap imageBitmap;
     // Variables que almacenan los datos del viaje
-    private String nombreDestino;
-    private String mCurrentPhotoPath;
-    private String valorDestinoRecibida;
-    private String tiempoDestino;
-    private String tiempoDestino2;
+    private String campoDestino;
+    private String ImagenAvatarViaje;
+    private String campoDias;
+    private String campoNoches;
+    private String campoValor;
     private boolean localidadDestino;
     private String descripPaquete;
     private float valoracionEstrellas;
@@ -70,8 +79,10 @@ public class FichaViajeActivity extends AppCompatActivity {
         seteoBotones();
 
     }
-/*El método seteoBotones() se utiliza para establecer los oyentes de los botones de la interfaz de usuario.*/
-    public void seteoBotones(){
+
+    /*El método seteoBotones() se utiliza para establecer los oyentes de los
+    botones de la interfaz de usuario.*/
+    public void seteoBotones() {
 // Botón para tomar una foto
         binding.ImagenAvatarViaje.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +99,13 @@ public class FichaViajeActivity extends AppCompatActivity {
 
                 if (i == R.id.radioNacional) {
 
-                     localidadDestino = false;
+                    localidadDestino = false;
                     // El usuario seleccionó "nacional"
                     // Aquí puedes hacer lo que necesites con este valor
 
                 } else if (i == R.id.radioInternacional) {
 
-                     localidadDestino = true;
+                    localidadDestino = true;
 
                     // El usuario seleccionó "Internacional"
                     // Aquí puedes hacer lo que necesites con este valor
@@ -105,18 +116,20 @@ public class FichaViajeActivity extends AppCompatActivity {
         binding.botonVerDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                llenarRegistroDestino();
-
-                //Log.d("MainActivity", "CLICK");
+                Intent intent = new Intent(getApplicationContext(), ListadoFichasActivity.class);
+                startActivity(intent);
             }
         });
+                //Log.d("MainActivity", "CLICK");
+            }
 
-    }
-/*El método llenarRegistroDestino() se utiliza para tomar la información ingresada por el usuario y
-crear una ficha de destino y una ficha de registro para esa ficha de destino en la base de datos
-de la aplicación.*/
-    public void llenarRegistroDestino(){
+
+
+
+    /*El método llenarRegistroDestino() se utiliza para tomar la información ingresada por el usuario y
+    crear una ficha de destino y una ficha de registro para esa ficha de destino en la base de datos
+    de la aplicación.*/
+    public void llenarRegistroDestino() {
 
         //Se obtiene una instancia de la base de datos
         AppDataBase db = AppDataBase.getDatabase(context);
@@ -126,20 +139,20 @@ de la aplicación.*/
         FichaDestinoDAO fichaDao = db.fichaRegistroDao();
 
         //Se obtienen los valores ingresados por el usuario en los campos correspondientes
-        nombreDestino = binding.campoDestino.getText().toString();
-        valorDestinoRecibida = binding.campoValor.getText().toString();
-        tiempoDestino = binding.campoDias.getText().toString();
-        tiempoDestino2 = binding.campoNoches.getText().toString();
+        campoDestino = binding.campoDestino.getText().toString();
+        campoValor = binding.campoValor.getText().toString();
+        campoDias = binding.campoDias.getText().toString();
+        campoNoches = binding.campoNoches.getText().toString();
         descripPaquete = binding.descripPaquete.getText().toString();
         valoracionEstrellas = binding.valoracionEstrellas.getRating();
 
         //Se crea un objeto Destino con los valores ingresados por el usuario
         Destino destino = new Destino();
-        destino.setRutaImagen(mCurrentPhotoPath);
-        destino.setNombreDestino(nombreDestino);
-        destino.setValorDestinoRecibida(valorDestinoRecibida);
-        destino.setTiempoDestino(tiempoDestino);
-        destino.setTiempoDestino2(tiempoDestino2);
+        destino.setRutaImagen(ImagenAvatarViaje);
+        destino.setNombreDestino(campoDestino);
+        destino.setValorDestinoRecibida(campoValor);
+        destino.setTiempoDestino(campoDias);
+        destino.setTiempoDestino2(campoNoches);
 
 
         //Se crea un objeto FichaDestino con los valores ingresados por el usuario
@@ -147,7 +160,8 @@ de la aplicación.*/
         fichaDestino.setDescripPaquete(descripPaquete);
         fichaDestino.setValoracionEstrellas(valoracionEstrellas);
 
-        //Se utiliza ExecutorService para ejecutar la inserción de los datos en la base de datos en un hilo
+        //Se utiliza ExecutorService para ejecutar la inserción de los datos en la base
+        // de datos en un hilo
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
@@ -177,16 +191,17 @@ de la aplicación.*/
         });
 
     }
+
     //Método para lanzar la cámara
     public void tomarFoto() {
         // Solicitar permiso para usar la cámara si no está otorgado
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                     REQUEST_PERMISSION_CAMERA);
             return;
         }
-
+// Crear un intent para tomar una foto
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Verificar si hay una aplicación de cámara instalada en el dispositivo
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -212,6 +227,7 @@ de la aplicación.*/
         }
     }
 
+    // Método para crear un archivo de imagen único
     private File createImageFile() throws IOException {
         // Crear un nombre único para la imagen basado en la fecha y hora actuales
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -225,9 +241,10 @@ de la aplicación.*/
                 storageDir      /* directorio */
         );
         // Guardar la ruta absoluta del archivo creado
-        mCurrentPhotoPath = image.getAbsolutePath();
+        ImagenAvatarViaje = image.getAbsolutePath();
         return image;
     }
+
     // Método para recibir la imagen capturada por la cámara
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -236,7 +253,7 @@ de la aplicación.*/
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             // Mostrar la imagen en el ImageView
 
-            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            Bitmap bitmap = BitmapFactory.decodeFile(ImagenAvatarViaje);
             binding.ImagenAvatarViaje.setImageBitmap(bitmap);
             // Guardar la imagen en la galería del dispositivo
             //galleryAddPic();

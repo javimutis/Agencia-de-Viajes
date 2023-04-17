@@ -1,6 +1,7 @@
 package bootcamp.cl.ejemplo.appveterinarioperruno.adaptadores;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import bootcamp.cl.ejemplo.appveterinarioperruno.R;
+import bootcamp.cl.ejemplo.appveterinarioperruno.VerFichaActivity;
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.Destino;
 
 /*
 Se le pasa por paremetro el viewolder que queremos pintar
 DestinoAdapter.ViewHolder,esto es herencia  la clase ViewHolder esta creada acá mismo al finla del código
  */
+// Esta línea importa las librerías necesarias para la implementación del adaptador.
+
 public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHolder> {
 
-    private List<Destino> mData;
-    private LayoutInflater mInflater;
-    private Context context;
+    private List<Destino> mData;// Lista de objetos de tipo Destino.
+    private LayoutInflater mInflater;// Para inflar la vista XML del ViewHolder.
+
+    private Context context; // Contexto de la aplicación.
 
 
     public DestinoAdapter(List<Destino> itemList, Context context) {
@@ -44,7 +49,7 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
      */
     @Override
     public DestinoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+// Crea una nueva vista del ViewHolder inflando el XML.
         View view = mInflater.inflate(R.layout.ficha_item, null);
         return new DestinoAdapter.ViewHolder(view);
     }
@@ -55,18 +60,33 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
    Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
    del objeto dentro de la lista
     */
+
     @Override
     public void onBindViewHolder(final DestinoAdapter.ViewHolder holder, final int position) {
+        // Asigna los valores de los destinos a las vistas del ViewHolder.
         holder.bindData(mData.get(position));
+        // Agregamos un listener al botón contenedorItem
+        holder.itemView.findViewById(R.id.contenedorItem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Creamos un intent para abrir la actividad VerFichaActivity
+                Intent intent = new Intent(context, VerFichaActivity.class);
+                // Agregamos información necesaria a través de putExtra
+                intent.putExtra("destino_id", mData.get(position).getId());
+                // Iniciamos la actividad VerFichaActivity
+                context.startActivity(intent);
+            }
+        });
     }
-
 
    /*
    Esta es la clase ViewHolder que le pasasamos al adaptador
    Básicamente lo que hace un ViewHolder es recibir el layout del item (la fila de la lista)
    y le indica que elementos(views) quiero pintar
     */
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+        // Declaración de las vistas del ViewHolder.
         ImageView rutaImagen;
         TextView nombreDestino, tiempoDestino, tiempoDestino2, valorDestinoRecibida, localidadDestino;
 
@@ -77,6 +97,7 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
          */
         ViewHolder(View itemView) {
             super(itemView);
+// Asignación de las vistas a sus respectivos elementos en la vista.
 
             rutaImagen = itemView.findViewById(R.id.imagenDestinosItem);
             nombreDestino = itemView.findViewById(R.id.nombreDestinoItem);
@@ -92,7 +113,8 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
         * @param item
         */
         public void bindData(final Destino item) {
-            //Drawable d = context.getDrawable(item.getImage());
+            // Asigna los valores del objeto Destino a las vistas del ViewHolder.
+
             nombreDestino.setText(item.getNombreDestino());
             tiempoDestino.setText(item.getTiempoDestino());
             tiempoDestino2.setText(item.getTiempoDestino2());

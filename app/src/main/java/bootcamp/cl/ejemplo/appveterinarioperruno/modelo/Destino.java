@@ -83,4 +83,8 @@ public class Destino {
     public void setLocalidadDestino(boolean localidadDestino) {
         this.localidadDestino = localidadDestino;
     }
+
+    public boolean getId() {
+        return false;
+    }
 }

@@ -5,6 +5,8 @@
     <string name="boton_ficha">IR AL REGISTRO</string>
     <string name="boton_agregar">AGREGAR DESTINO</string>
     <string name="mensaje_toast_ficha_viaje">Tienes que ingresar los datos del viaje</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

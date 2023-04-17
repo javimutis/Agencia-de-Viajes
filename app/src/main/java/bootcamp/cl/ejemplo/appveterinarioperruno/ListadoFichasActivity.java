@@ -25,12 +25,8 @@ public class ListadoFichasActivity extends AppCompatActivity {
 
     private Context context;
     ActivityListadoFichasBinding binding; // Binding de la vista de la actividad
-
-
     DestinoAdapter adaptarDestino; // Adaptador para la lista de destinos
-
     List<Destino> listaDestino = new ArrayList<>();// Lista de objetos Destino
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

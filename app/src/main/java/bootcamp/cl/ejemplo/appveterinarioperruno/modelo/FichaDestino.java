@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
         onDelete = ForeignKey.CASCADE))
 public class FichaDestino {
 
+//Declaración de las variables que almacenarán los datos de la FichaDestino
     @PrimaryKey(autoGenerate = true)
     private long idFicha;
     private String descripPaquete;
