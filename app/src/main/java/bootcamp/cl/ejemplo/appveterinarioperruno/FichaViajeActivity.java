@@ -120,10 +120,8 @@ public class FichaViajeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-                //Log.d("MainActivity", "CLICK");
-            }
-
-
+        //Log.d("MainActivity", "CLICK");
+    }
 
 
     /*El método llenarRegistroDestino() se utiliza para tomar la información ingresada por el usuario y
