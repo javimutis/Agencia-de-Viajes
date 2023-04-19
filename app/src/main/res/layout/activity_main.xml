@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +9,9 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/tituloApp"
         android:layout_width="match_parent"
@@ -83,5 +88,5 @@
         android:text="Bootcamp UNAB"
         android:textColor="@color/black"
         android:textSize="12sp"></TextView>
-
+</ScrollView>
 </LinearLayout>

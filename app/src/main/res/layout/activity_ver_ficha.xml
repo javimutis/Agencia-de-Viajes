@@ -7,6 +7,10 @@
 
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -150,5 +154,7 @@
 
 
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+    </ScrollView>
 </layout>

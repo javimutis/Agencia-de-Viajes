@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void abrirVerFicha() {
-        Intent intentoVerFicha = new Intent(this, VerFichaActivity.class);
+        Intent intentoVerFicha = new Intent(this, ListadoFichasActivity.class);
         startActivity(intentoVerFicha);
     }
 }
