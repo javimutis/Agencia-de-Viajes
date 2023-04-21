@@ -28,6 +28,7 @@ public interface DestinoDAO {
 
     @Query("SELECT * FROM Destino")
     List<Destino> obtenerDestino();
-
-
 }
+
+
+

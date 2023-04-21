@@ -9,9 +9,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/tituloApp"
         android:layout_width="match_parent"
@@ -42,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_weight=".5"
         android:adjustViewBounds="true"
-        android:src="@drawable/logoavion" />
+        android:src="@drawable/logoavion"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/preguntaAccion"
@@ -88,5 +87,5 @@
         android:text="Bootcamp UNAB"
         android:textColor="@color/black"
         android:textSize="12sp"></TextView>
-</ScrollView>
+
 </LinearLayout>

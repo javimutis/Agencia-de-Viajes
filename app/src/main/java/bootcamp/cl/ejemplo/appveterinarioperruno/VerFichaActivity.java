@@ -2,37 +2,52 @@ package bootcamp.cl.ejemplo.appveterinarioperruno;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import java.util.List;
+
+import bootcamp.cl.ejemplo.appveterinarioperruno.basedatos.AppDataBase;
+import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.FichaDestino;
 
 public class VerFichaActivity extends AppCompatActivity {
 
+    private String campoDestino = "";
+    private String campoDias = "";
+    private String campoNoches = "";
+    private String campoValor = "";
+    private boolean localidadDestino = false;
+    private String descripPaquete = "";
+    private float estrellasValoracion = 0.0f;
 
-    // Este método se ejecuta cuando se crea la actividad
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Establecemos la interfaz de usuario para esta actividad
         setContentView(R.layout.activity_ver_ficha);
-    }
-    // Creamos un objeto Intent
-    Intent intent = new Intent(this, VerFichaActivity.class);
 
-// Agregamos los datos al Intent
-intent.putExtra("destino", campoDestino);
-intent.putExtra("imagen", ImagenAvatarViaje);
-intent.putExtra("dias", campoDias);
-intent.putExtra("noches", campoNoches);
-intent.putExtra("valor", campoValor);
-intent.putExtra("localidad", localidadDestino);
-intent.putExtra("descripcion", descripPaquete);
-intent.putExtra("valoracion", valoracionEstrellas);
+        long destinoId = getIntent().getLongExtra("destino_id", -1);
+        AppDataBase appDataBase = AppDataBase.getDatabase(this);
 
-    // Iniciamos VerFichaActivity
-    startActivity(intent);
-// Este método se ejecuta cuando la actividad comienza a mostrarse en pantalla
-    @Override
-    protected void onStart() {
-        super.onStart();
+        TextView nombreFichaItemTextView = findViewById(R.id.nombreFichaItem);
+        nombreFichaItemTextView.setText(campoDestino);
+
+        ImageView imagenFichaItem = findViewById(R.id.imagenFichaItem);
+        imagenFichaItem.setImageURI(Uri.parse(""));
+
+        TextView diasFichaItemTextView = findViewById(R.id.diasFichaItem);
+        diasFichaItemTextView.setText(campoDias);
+
+        TextView nocheFichaItemTextView = findViewById(R.id.nocheFichaItem);
+        nocheFichaItemTextView.setText(campoNoches);
+
+        TextView valorFichaItemTextView = findViewById(R.id.valorFichaItem);
+        valorFichaItemTextView.setText(campoValor);
+
+        RatingBar valoracionFichaItemRatingBar = findViewById(R.id.estrellasFichaItemRatingBar);
+        valoracionFichaItemRatingBar.setRating(estrellasValoracion);
     }
 }

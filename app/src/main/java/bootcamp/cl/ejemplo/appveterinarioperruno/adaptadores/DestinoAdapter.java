@@ -1,19 +1,15 @@
 package bootcamp.cl.ejemplo.appveterinarioperruno.adaptadores;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import bootcamp.cl.ejemplo.appveterinarioperruno.R;
-import bootcamp.cl.ejemplo.appveterinarioperruno.VerFichaActivity;
+import bootcamp.cl.ejemplo.appveterinarioperruno.databinding.FichaItemBinding;
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.Destino;
 
 /*
@@ -24,15 +20,14 @@ DestinoAdapter.ViewHolder,esto es herencia  la clase ViewHolder esta creada acá
 
 public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHolder> {
 
-    private List<Destino> mData;// Lista de objetos de tipo Destino.
-    private LayoutInflater mInflater;// Para inflar la vista XML del ViewHolder.
+    private final List<Destino> mData;// Lista de objetos de tipo Destino.
 
-    private Context context; // Contexto de la aplicación.
-
+    private OnItemClickListener onItemClickListener;
 
     public DestinoAdapter(List<Destino> itemList, Context context) {
-        this.mInflater = LayoutInflater.from(context);
-        this.context = context;
+        // Para inflar la vista XML del ViewHolder.
+        LayoutInflater mInflater = LayoutInflater.from(context);
+        // Contexto de la aplicación.
         this.mData = itemList;
     }
 
@@ -43,84 +38,75 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
 
     /*
     Este metodo se llama x cantidad de veces , dependiendo la cantidad de objetos que le lleguen
-    si tengo 5 animales , se creará 5 veces automáticamente.
+    si tengo 5 destinos , se creará 5 veces automáticamente.
     Se le envía al ViewHolder la vista xml
 
      */
+    @NonNull
     @Override
     public DestinoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-// Crea una nueva vista del ViewHolder inflando el XML.
-        View view = mInflater.inflate(R.layout.ficha_item, null);
-        return new DestinoAdapter.ViewHolder(view);
+        FichaItemBinding binding = FichaItemBinding.inflate(LayoutInflater.from(parent.getContext()));
+        // Crea una nueva vista del ViewHolder inflando el XML.
+        return new DestinoAdapter.ViewHolder(binding);
     }
-
-
 
    /*
    Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
    del objeto dentro de la lista
     */
-
+/*
+   Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
+   del objeto dentro de la lista
+    */
     @Override
     public void onBindViewHolder(final DestinoAdapter.ViewHolder holder, final int position) {
         // Asigna los valores de los destinos a las vistas del ViewHolder.
         holder.bindData(mData.get(position));
-        // Agregamos un listener al botón contenedorItem
-        holder.itemView.findViewById(R.id.contenedorItem).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Creamos un intent para abrir la actividad VerFichaActivity
-                Intent intent = new Intent(context, VerFichaActivity.class);
-                // Agregamos información necesaria a través de putExtra
-                intent.putExtra("destino_id", mData.get(position).getId());
-                // Iniciamos la actividad VerFichaActivity
-                context.startActivity(intent);
-            }
-        });
     }
+    // Se crea la interfaz en Java para que esta sea llamada desde cualquier otro lugar
+    public interface OnItemClickListener{
+        void onItemClick(Destino destino);
+    }
+    // Setro del listener como cualquier otro atributo
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
+    /*
+      Esta es la clase ViewHolder que le pasasamos al adaptador
+      Básicamente lo que hace un ViewHolder es recibir el layout del item (la fila de la lista)
+      y le indica que elementos(views) quiero pintar
+       */
 
-   /*
-   Esta es la clase ViewHolder que le pasasamos al adaptador
-   Básicamente lo que hace un ViewHolder es recibir el layout del item (la fila de la lista)
-   y le indica que elementos(views) quiero pintar
-    */
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+      public class ViewHolder extends RecyclerView.ViewHolder {
         // Declaración de las vistas del ViewHolder.
-        ImageView rutaImagen;
-        TextView nombreDestino, tiempoDestino, tiempoDestino2, valorDestinoRecibida, localidadDestino;
+        final FichaItemBinding binding;
 
-        /*
-        Constructor del VieqHolder
+            /*
+        Constructor del ViewHolder
         recibe como parametro el layot (la vista) que acá llega
         como itemView
          */
-        ViewHolder(View itemView) {
-            super(itemView);
-// Asignación de las vistas a sus respectivos elementos en la vista.
-
-            rutaImagen = itemView.findViewById(R.id.imagenDestinosItem);
-            nombreDestino = itemView.findViewById(R.id.nombreDestinoItem);
-            tiempoDestino = itemView.findViewById(R.id.diaItem);
-            tiempoDestino2 = itemView.findViewById(R.id.nocheItem);
-            valorDestinoRecibida= itemView.findViewById(R.id.valorDestinoItem);
-
+        ViewHolder(FichaItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
-
        /**
-        * Puente que sirve para pasarle el objeto animal
+        * Puente que sirve para pasarle el objeto destino
         * y seterales los datos a las vistas , es como simular un binding
-        * @param item
         */
         public void bindData(final Destino item) {
             // Asigna los valores del objeto Destino a las vistas del ViewHolder.
 
-            nombreDestino.setText(item.getNombreDestino());
-            tiempoDestino.setText(item.getTiempoDestino());
-            tiempoDestino2.setText(item.getTiempoDestino2());
-            valorDestinoRecibida.setText(item.getValorDestinoRecibida());
+                //Drawable d = context.getDrawable(item.getImage());
+                binding.nombreDestinoItem.setText(item.getNombreDestino());
+                binding.diaItem.setText(item.getTiempoDestino());
+                binding.nocheItem.setText(item.getTiempoDestino2());
+                binding.valorDestinoItem.setText(item.getValorDestinoRecibida());
 
+                binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(item));
+
+                binding.executePendingBindings();
+            }
         }
 
-}
-}
+      }

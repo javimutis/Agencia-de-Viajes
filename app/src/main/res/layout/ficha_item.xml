@@ -35,7 +35,8 @@
                     android:layout_gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    app:srcCompat="@drawable/cancun"></ImageView>
+                    app:srcCompat="@drawable/cancun"
+                    android:contentDescription="TODO"></ImageView>
 
                 <LinearLayout
                     android:id="@+id/contenedorItem"
@@ -69,7 +70,7 @@
                             android:layout_height="wrap_content"
                             android:text="7 DÍAS"
                             android:textColor="@color/black"
-                            android:textSize="15dp"
+                            android:textSize="15sp"
                             android:textStyle="bold"></TextView>
 
                         <TextView
@@ -79,7 +80,7 @@
                             android:layout_marginStart="10dp"
                             android:text="6 NOCHES"
                             android:textColor="@color/black"
-                            android:textSize="15dp"
+                            android:textSize="15sp"
                             android:textStyle="bold"></TextView>
                     </LinearLayout>
 
@@ -89,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:text="USD 700"
                         android:textColor="@color/black"
-                        android:textSize="22dp"
+                        android:textSize="22sp"
                         android:textStyle="bold"></TextView>
 
                 </LinearLayout>
@@ -101,7 +102,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:layout_toRightOf="@id/contenedorItem"
-                    app:srcCompat="@drawable/baseline_chevron_right_24"></ImageView>
+                    app:srcCompat="@drawable/baseline_chevron_right_24"
+                    android:contentDescription="TODO"></ImageView>
 
             </RelativeLayout>
 

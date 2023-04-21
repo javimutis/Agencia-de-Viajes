@@ -7,13 +7,17 @@ import androidx.room.PrimaryKey;
 public class Destino {
 
     @PrimaryKey(autoGenerate = true)
-    private long idDestino;
+    private long idDestino; // Cambiar de long a int
+
+    // El resto del código se mantiene igual
+
     private String rutaImagen;
     private String nombreDestino;
     private String tiempoDestino;
     private String tiempoDestino2;
     private String valorDestinoRecibida;
     private boolean localidadDestino;
+
 
     public Destino() {
     }
@@ -82,9 +86,5 @@ public class Destino {
 
     public void setLocalidadDestino(boolean localidadDestino) {
         this.localidadDestino = localidadDestino;
-    }
-
-    public boolean getId() {
-        return false;
     }
 }
