@@ -50,10 +50,10 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
         return new DestinoAdapter.ViewHolder(binding);
     }
 
-   /*
-   Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
-   del objeto dentro de la lista
-    */
+    /*
+    Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
+    del objeto dentro de la lista
+     */
 /*
    Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
    del objeto dentro de la lista
@@ -63,13 +63,15 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
         // Asigna los valores de los destinos a las vistas del ViewHolder.
         holder.bindData(mData.get(position));
     }
-    // Se crea la interfaz en Java para que esta sea llamada desde cualquier otro lugar
-    public interface OnItemClickListener{
-        void onItemClick(Destino destino);
-    }
+
     // Setro del listener como cualquier otro atributo
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    // Se crea la interfaz en Java para que esta sea llamada desde cualquier otro lugar
+    public interface OnItemClickListener {
+        void onItemClick(Destino destino);
     }
     /*
       Esta es la clase ViewHolder que le pasasamos al adaptador
@@ -77,36 +79,37 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
       y le indica que elementos(views) quiero pintar
        */
 
-      public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         // Declaración de las vistas del ViewHolder.
         final FichaItemBinding binding;
 
-            /*
-        Constructor del ViewHolder
-        recibe como parametro el layot (la vista) que acá llega
-        como itemView
-         */
+        /*
+    Constructor del ViewHolder
+    recibe como parametro el layot (la vista) que acá llega
+    como itemView
+     */
         ViewHolder(FichaItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
-       /**
-        * Puente que sirve para pasarle el objeto destino
-        * y seterales los datos a las vistas , es como simular un binding
-        */
+
+        /**
+         * Puente que sirve para pasarle el objeto destino
+         * y seterales los datos a las vistas , es como simular un binding
+         */
         public void bindData(final Destino item) {
             // Asigna los valores del objeto Destino a las vistas del ViewHolder.
 
-                //Drawable d = context.getDrawable(item.getImage());
-                binding.nombreDestinoItem.setText(item.getNombreDestino());
-                binding.diaItem.setText(item.getTiempoDestino());
-                binding.nocheItem.setText(item.getTiempoDestino2());
-                binding.valorDestinoItem.setText(item.getValorDestinoRecibida());
+            //Drawable d = context.getDrawable(item.getImage());
+            binding.nombreDestinoItem.setText(item.getNombreDestino());
+            binding.diaItem.setText(item.getTiempoDestino());
+            binding.nocheItem.setText(item.getTiempoDestino2());
+            binding.valorDestinoItem.setText(item.getValorDestinoRecibida());
 
-                binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(item));
+            binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(item));
 
-                binding.executePendingBindings();
-            }
+            binding.executePendingBindings();
         }
+    }
 
-      }
+}

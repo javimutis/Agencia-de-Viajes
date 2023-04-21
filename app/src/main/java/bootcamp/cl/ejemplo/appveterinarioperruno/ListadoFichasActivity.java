@@ -1,11 +1,13 @@
 package bootcamp.cl.ejemplo.appveterinarioperruno;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,40 +15,62 @@ import java.util.concurrent.Executors;
 import bootcamp.cl.ejemplo.appveterinarioperruno.adaptadores.DestinoAdapter;
 import bootcamp.cl.ejemplo.appveterinarioperruno.basedatos.AppDataBase;
 import bootcamp.cl.ejemplo.appveterinarioperruno.basedatos.DestinoDAO;
+import bootcamp.cl.ejemplo.appveterinarioperruno.basedatos.FichaDestinoDAO;
 import bootcamp.cl.ejemplo.appveterinarioperruno.databinding.ActivityListadoFichasBinding;
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.Destino;
 
 public class ListadoFichasActivity extends AppCompatActivity {
 
-    private ActivityListadoFichasBinding binding; // Binding de la vista de la actividad
-    private DestinoAdapter destinoAdapter; // Adaptador para la lista de destinos
+    ActivityListadoFichasBinding binding;
+    List<Destino> listaDestino = new ArrayList<>();
+    private Context context;
+    private DestinoAdapter adaptarDestino; // Adaptador para la lista de destinos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         binding = ActivityListadoFichasBinding.inflate(getLayoutInflater());
+        AppDataBase db = AppDataBase.getDatabase(context);
         setContentView(binding.getRoot());
         binding.listadoFichas.setLayoutManager(new LinearLayoutManager(this));
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(() -> {
-            try {
-                AppDataBase db = AppDataBase.getDatabase(getApplicationContext());
-                DestinoDAO destinoDAO = db.destinoDao();
-                List<Destino> listaDestino = destinoDAO.obtenerDestino();
+           /*
+        Las consultas a las bases de datos se tiene que hacer en un hilo
+        secundario , si no la app se cae porque toma el hilo principal
+        La lógica que uds hagan debe ir dentro del run()
+         */
 
-                runOnUiThread(() -> {
-                    destinoAdapter = new DestinoAdapter(listaDestino, getApplicationContext());
-                    destinoAdapter.setOnItemClickListener(destino -> Toast.makeText(ListadoFichasActivity.this,
-                            destino.getNombreDestino(), Toast.LENGTH_SHORT).show());
-                    binding.listadoFichas.setAdapter(destinoAdapter);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                DestinoDAO destinoDAO = db.destinoDao();
+                FichaDestinoDAO fichaDestinoDAO = db.fichaDestinoDao();
+                // Se obtine un listado de los registros de la base de datos gracias al DAO
+
+                listaDestino = destinoDAO.obtenerDestinos();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        // Se crea el objeto adaptador
+                        adaptarDestino = new DestinoAdapter(listaDestino, context);
+                        adaptarDestino.setOnItemClickListener(new DestinoAdapter.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(Destino destino) {
+
+                                Toast.makeText(ListadoFichasActivity.this, destino.getNombreDestino(), Toast.LENGTH_SHORT);
+                            }
+                        });
+                        //Al reciclerView le paso el adaptador lleno de objetos
+                        binding.listadoFichas.setAdapter(adaptarDestino);
+                    }
                 });
-            } catch (Exception e) {
-                e.printStackTrace();
-                runOnUiThread(() -> {
-                    Toast.makeText(ListadoFichasActivity.this, "Error al obtener los destinos.", Toast.LENGTH_SHORT).show();
-                });
+
             }
+
         });
+
     }
 }

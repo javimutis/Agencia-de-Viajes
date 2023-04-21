@@ -12,15 +12,17 @@ public class FichaDestino {
     private long idFichaDestino;
     private String tituloFichaDestino;
     private String descripcionFichaDestino;
+    private float estrellasValoracion;
     private long destino_id; // Agregar variable para la relación con Destino
 
     public FichaDestino() {
     }
 
-    public FichaDestino(long idFichaDestino, String tituloFichaDestino, String descripcionFichaDestino, long destino_id) {
+    public FichaDestino(long idFichaDestino, String tituloFichaDestino, String descripcionFichaDestino, float estrellasValoracion, long destino_id) {
         this.idFichaDestino = idFichaDestino;
         this.tituloFichaDestino = tituloFichaDestino;
         this.descripcionFichaDestino = descripcionFichaDestino;
+        this.estrellasValoracion = estrellasValoracion;
         this.destino_id = destino_id;
     }
 
@@ -28,7 +30,7 @@ public class FichaDestino {
         return idFichaDestino;
     }
 
-    public void setIdFichaDestino(int idFichaDestino) {
+    public void setIdFichaDestino(long idFichaDestino) {
         this.idFichaDestino = idFichaDestino;
     }
 
@@ -48,6 +50,14 @@ public class FichaDestino {
         this.descripcionFichaDestino = descripcionFichaDestino;
     }
 
+    public float getEstrellasValoracion() {
+        return estrellasValoracion;
+    }
+
+    public void setEstrellasValoracion(float estrellasValoracion) {
+        this.estrellasValoracion = estrellasValoracion;
+    }
+
     public long getDestino_id() {
         return destino_id;
     }
@@ -56,3 +66,4 @@ public class FichaDestino {
         this.destino_id = destino_id;
     }
 }
+

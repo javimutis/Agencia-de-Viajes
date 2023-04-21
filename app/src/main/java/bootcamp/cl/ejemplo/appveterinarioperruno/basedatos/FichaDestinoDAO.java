@@ -17,11 +17,13 @@ public interface FichaDestinoDAO {
 
     // Inserta una nueva ficha en la tabla FichaDestino y retorna el ID de la ficha insertada
     @Insert
-    void insertarFichaDestino(FichaDestino ficha);
+    long insertarFichaDestino(FichaDestino ficha);
+
     // Actualiza una ficha existente en la tabla FichaDestino
     @Update
     void actualizarFichaDestino(FichaDestino ficha);
-// Elimina una ficha existente de la tabla FichaDestino
+
+    // Elimina una ficha existente de la tabla FichaDestino
     @Delete
     void eliminarFichaDestino(FichaDestino ficha);
 

@@ -7,12 +7,14 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 public class Migration1To2 extends Migration {
     public Migration1To2() {
-
         super(1, 2);
     }
 
     @Override
     public void migrate(@NonNull SupportSQLiteDatabase database) {
+        // Agrega las sentencias SQL necesarias para actualizar de la versión 4 a la versión 5.
+    }
+}
 
         /*Aquí se deben agregar las sentencias SQL necesarias para actualizar la estructura
         de la base de datos de la versión 1 a la versión 2. Esto puede incluir, por ejemplo,
@@ -20,5 +22,4 @@ public class Migration1To2 extends Migration {
 
          En este caso, no se han agregado las sentencias SQL específicas, por lo que esta
         migración no haría ninguna modificación a la base de datos.*/
-    }
-}
+
