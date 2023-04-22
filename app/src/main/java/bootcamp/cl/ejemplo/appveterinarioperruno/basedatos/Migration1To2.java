@@ -1,9 +1,7 @@
 package bootcamp.cl.ejemplo.appveterinarioperruno.basedatos;
 
-import androidx.annotation.NonNull;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-// Se define la migración de la versión 1 a la versión 2 de la base de datos
 
 public class Migration1To2 extends Migration {
     public Migration1To2() {
@@ -11,10 +9,13 @@ public class Migration1To2 extends Migration {
     }
 
     @Override
-    public void migrate(@NonNull SupportSQLiteDatabase database) {
-        // Agrega las sentencias SQL necesarias para actualizar de la versión 4 a la versión 5.
+    public void migrate(SupportSQLiteDatabase database) {
+
+
+        // Aquí se deben agregar las sentencias SQL para actualizar la base de datos
     }
 }
+
 
         /*Aquí se deben agregar las sentencias SQL necesarias para actualizar la estructura
         de la base de datos de la versión 1 a la versión 2. Esto puede incluir, por ejemplo,

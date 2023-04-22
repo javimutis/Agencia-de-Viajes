@@ -30,8 +30,8 @@ public class VerFichaActivity extends AppCompatActivity {
 
         long destinoId = getIntent().getLongExtra("destino_id", -1);
         AppDataBase appDataBase = AppDataBase.getDatabase(this);
-        Destino destino = appDataBase.destinoDao().obtenerDestinosById(destinoId);
-        FichaDestino fichaDestino = appDataBase.fichaDestinoDao().getFichaDestinoByDestinoId(destinoId);
+        Destino destino = appDataBase.destinoDAO().obtenerDestinosById(destinoId);
+        FichaDestino fichaDestino = appDataBase.fichaDestinoDAO().getFichaDestinoByDestinoId(destinoId);
 
         if (destino != null && fichaDestino != null) {
             campoDestino = destino.getNombreDestino();

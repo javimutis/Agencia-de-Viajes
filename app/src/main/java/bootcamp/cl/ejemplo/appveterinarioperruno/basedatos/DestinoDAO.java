@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.Destino;
 
 // Indica que esta clase es un Data Access Object (DAO) y está relacionada con la entidad Destino
@@ -25,6 +27,6 @@ public interface DestinoDAO {
     void eliminarDestino(Destino destino);
 
     // Método para obtener un objeto Destino por su ID
-    @Query("SELECT * FROM Destino WHERE idDestino = :destinoId")
-    Destino obtenerDestinos();
+       @Query("SELECT * FROM Destino")
+       List<Destino> obtenerDestinos();
 }

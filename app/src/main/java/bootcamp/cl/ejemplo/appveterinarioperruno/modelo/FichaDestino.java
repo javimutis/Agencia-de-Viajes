@@ -4,26 +4,24 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Destino.class, parentColumns = "idDestino", childColumns = "destino_id"))
+@Entity(foreignKeys = @ForeignKey(entity = Destino.class, parentColumns = "idDestino", childColumns = "destinoId",onDelete = ForeignKey.CASCADE))
 public class FichaDestino {
 
     //Declaración de las variables que almacenarán los datos de la FichaDestino
     @PrimaryKey(autoGenerate = true)
     private long idFichaDestino;
-    private String tituloFichaDestino;
     private String descripcionFichaDestino;
     private float estrellasValoracion;
-    private long destino_id; // Agregar variable para la relación con Destino
+    private long destinoId; // Agregar variable para la relación con Destino
 
     public FichaDestino() {
     }
 
-    public FichaDestino(long idFichaDestino, String tituloFichaDestino, String descripcionFichaDestino, float estrellasValoracion, long destino_id) {
+    public FichaDestino(long idFichaDestino, String descripcionFichaDestino, float estrellasValoracion, long destinoId) {
         this.idFichaDestino = idFichaDestino;
-        this.tituloFichaDestino = tituloFichaDestino;
         this.descripcionFichaDestino = descripcionFichaDestino;
         this.estrellasValoracion = estrellasValoracion;
-        this.destino_id = destino_id;
+        this.destinoId = destinoId;
     }
 
     public long getIdFichaDestino() {
@@ -32,14 +30,6 @@ public class FichaDestino {
 
     public void setIdFichaDestino(long idFichaDestino) {
         this.idFichaDestino = idFichaDestino;
-    }
-
-    public String getTituloFichaDestino() {
-        return tituloFichaDestino;
-    }
-
-    public void setTituloFichaDestino(String tituloFichaDestino) {
-        this.tituloFichaDestino = tituloFichaDestino;
     }
 
     public String getDescripcionFichaDestino() {
@@ -58,12 +48,11 @@ public class FichaDestino {
         this.estrellasValoracion = estrellasValoracion;
     }
 
-    public long getDestino_id() {
-        return destino_id;
+    public long getDestinoId() {
+        return destinoId;
     }
 
-    public void setDestino_id(long destino_id) {
-        this.destino_id = destino_id;
+    public void setDestinoId(long destinoId) {
+        this.destinoId = destinoId;
     }
 }
-

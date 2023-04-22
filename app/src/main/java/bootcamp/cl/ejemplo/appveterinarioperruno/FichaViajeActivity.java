@@ -37,9 +37,6 @@ public class FichaViajeActivity extends AppCompatActivity {
     private FichaDestino fichaDestino;
     private Context context;
 
-    public FichaViajeActivity() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +67,10 @@ public class FichaViajeActivity extends AppCompatActivity {
 
 
     private void abrirVerFichas() {
+        AppDataBase db = AppDataBase.getDatabase(context);
+        DestinoDAO destinoDAO = db.destinoDAO();
+        FichaDestinoDAO fichaDestinoDAO = db.fichaDestinoDAO();
+
         nombreDestino = binding.campoDestino.getText().toString();
         tiempoDestino = binding.campoDias.getText().toString();
         tiempoDestino2 = binding.campoNoches.getText().toString();
@@ -78,8 +79,6 @@ public class FichaViajeActivity extends AppCompatActivity {
         descripcionFichaDestino = binding.descripPaquete.getText().toString();
         estrellasValoracion = binding.valoracionEstrellas.getRating();
 
-        destino = new Destino();
-        fichaDestino = new FichaDestino();
         destino.setNombreDestino(nombreDestino);
         destino.setTiempoDestino(tiempoDestino);
         destino.setTiempoDestino2(tiempoDestino2);
@@ -101,23 +100,24 @@ public class FichaViajeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                long idDestino = destinoDAO.insertarDestino(destino);
+                fichaDestino.setDestinoId(idDestino);
+                long idFichaDestino = fichaDestinoDAO.insertarFichaDestino(fichaDestino);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Destino agregado con éxito", Toast.LENGTH_SHORT).show();
+                        //Intent intentActividadVerFicha = new Intent(context, VerFichaActivity.class);
+                        //intentActividadVerFicha.putExtra("perroAtendido",fichaAnimal);
+                        //startActivity(intentActividadVerFicha);
+                    }
+                });
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            AppDataBase db = AppDataBase.getDatabase(context);
-            DestinoDAO destinoDAO = db.destinoDao();
-            FichaDestinoDAO fichaDestinoDAO = db.fichaDestinoDao();
-            long idDestino = destinoDAO.insertarDestino(destino);
-            fichaDestino.setDestino_id(idDestino);
-            fichaDestinoDAO.insertarFichaDestino(fichaDestino);
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "Destino agregado", Toast.LENGTH_SHORT).show();
-                }
-            });
-            Intent intent = new Intent(FichaViajeActivity.this, VerFichaActivity.class);
-            intent.putExtra("destino_id", idDestino);
-            startActivity(intent);
+            }
+
         });
     }
 }

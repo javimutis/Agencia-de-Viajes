@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Destino {
 
     @PrimaryKey(autoGenerate = true)
-    private long idDestino; // Cambiar de long a int
+    private long idDestino;
 
     // El resto del código se mantiene igual
 

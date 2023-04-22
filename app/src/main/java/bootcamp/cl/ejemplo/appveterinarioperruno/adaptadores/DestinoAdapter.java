@@ -20,14 +20,14 @@ DestinoAdapter.ViewHolder,esto es herencia  la clase ViewHolder esta creada acá
 
 public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHolder> {
 
-    private final List<Destino> mData;// Lista de objetos de tipo Destino.
-
+    private List<Destino> mData;// Lista de objetos de tipo Destino.
+    private LayoutInflater mInflater;
+    private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public DestinoAdapter(List<Destino> itemList, Context context) {
-        // Para inflar la vista XML del ViewHolder.
-        LayoutInflater mInflater = LayoutInflater.from(context);
-        // Contexto de la aplicación.
+    public  DestinoAdapter(List<Destino> itemList, Context context) {
+        this.mInflater = LayoutInflater.from(context);
+        this.context = context;
         this.mData = itemList;
     }
 
@@ -42,19 +42,13 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
     Se le envía al ViewHolder la vista xml
 
      */
-    @NonNull
     @Override
     public DestinoAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         FichaItemBinding binding = FichaItemBinding.inflate(LayoutInflater.from(parent.getContext()));
-        // Crea una nueva vista del ViewHolder inflando el XML.
+        //View view = mInflater.inflate(R.layout.ficha_item, null);
         return new DestinoAdapter.ViewHolder(binding);
     }
-
     /*
-    Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
-    del objeto dentro de la lista
-     */
-/*
    Cada obeto que se pintará en la lista tiene una posición , este método detecta la posicion
    del objeto dentro de la lista
     */
@@ -63,15 +57,13 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
         // Asigna los valores de los destinos a las vistas del ViewHolder.
         holder.bindData(mData.get(position));
     }
-
+    // Se crea la interfaz en Java para que esta sea llamada desde cualquier otro lugar
+    public interface OnItemClickListener{
+        void onItemClick(Destino destino);
+    }
     // Setro del listener como cualquier otro atributo
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-    }
-
-    // Se crea la interfaz en Java para que esta sea llamada desde cualquier otro lugar
-    public interface OnItemClickListener {
-        void onItemClick(Destino destino);
     }
     /*
       Esta es la clase ViewHolder que le pasasamos al adaptador
@@ -81,7 +73,7 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Declaración de las vistas del ViewHolder.
-        final FichaItemBinding binding;
+        FichaItemBinding binding;
 
         /*
     Constructor del ViewHolder
@@ -100,7 +92,6 @@ public class DestinoAdapter extends RecyclerView.Adapter<DestinoAdapter.ViewHold
         public void bindData(final Destino item) {
             // Asigna los valores del objeto Destino a las vistas del ViewHolder.
 
-            //Drawable d = context.getDrawable(item.getImage());
             binding.nombreDestinoItem.setText(item.getNombreDestino());
             binding.diaItem.setText(item.getTiempoDestino());
             binding.nocheItem.setText(item.getTiempoDestino2());

@@ -20,11 +20,12 @@ import bootcamp.cl.ejemplo.appveterinarioperruno.databinding.ActivityListadoFich
 import bootcamp.cl.ejemplo.appveterinarioperruno.modelo.Destino;
 
 public class ListadoFichasActivity extends AppCompatActivity {
-
-    ActivityListadoFichasBinding binding;
-    List<Destino> listaDestino = new ArrayList<>();
     private Context context;
-    private DestinoAdapter adaptarDestino; // Adaptador para la lista de destinos
+    ActivityListadoFichasBinding binding;
+
+    DestinoAdapter adaptarDestino;
+
+    List<Destino> listaDestino = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,8 @@ public class ListadoFichasActivity extends AppCompatActivity {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                DestinoDAO destinoDAO = db.destinoDao();
-                FichaDestinoDAO fichaDestinoDAO = db.fichaDestinoDao();
+                DestinoDAO destinoDAO = db.destinoDAO();
+                FichaDestinoDAO fichaDestinoDAO = db.fichaDestinoDAO();
                 // Se obtine un listado de los registros de la base de datos gracias al DAO
 
                 listaDestino = destinoDAO.obtenerDestinos();

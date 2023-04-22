@@ -20,25 +20,28 @@ base de datos en la aplicación.*/
 
 // Anotación que define la clase como una base de datos, y le indica qué entidades contiene y la versión
 
-@Database(entities = {Destino.class, FichaDestino.class}, version = 1)
+@Database(entities = {Destino.class, FichaDestino.class}, version = 3)
 public abstract class AppDataBase extends RoomDatabase {
 
+    public abstract DestinoDAO destinoDAO();
+    public abstract FichaDestinoDAO fichaDestinoDAO();
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private static volatile AppDataBase INSTANCE;
 
-    public static synchronized AppDataBase getDatabase(final Context context) {
+    public static AppDataBase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDataBase.class, "bd_agencia_viajes")
-                    .addMigrations(new Migration1To2())
-                    .build();
+            synchronized (AppDataBase.class) {
+                if (INSTANCE == null) {
+
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, "bd_agencia")
+                            .addMigrations(new Migration1To2())
+                            .build();
+                }
+            }
         }
         return INSTANCE;
     }
-
-    public abstract DestinoDAO destinoDao();
-
-    public abstract FichaDestinoDAO fichaDestinoDao();
 }
+

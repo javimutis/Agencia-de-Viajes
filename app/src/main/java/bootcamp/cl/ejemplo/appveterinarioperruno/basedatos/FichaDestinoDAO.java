@@ -28,8 +28,7 @@ public interface FichaDestinoDAO {
     void eliminarFichaDestino(FichaDestino ficha);
 
     // Obtiene todas las fichas registradas para un destino específico, según el ID de dicho destino
-    @Query("SELECT * FROM FichaDestino WHERE destino_id = :destinoId")
-    List<FichaDestino> obtenerFichasDestino(long destinoId);
-
+    @Query("SELECT * FROM FichaDestino WHERE destinoId = :destinoId")
+    public List<FichaDestino> obtenerFichasDestino(long destinoId);
 
 }
